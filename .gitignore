@@ -11,7 +11,9 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-
+pubspec.lock
+.dart_tool/
+windows/flutter/ephemeral/
 # IntelliJ related
 *.iml
 *.ipr
