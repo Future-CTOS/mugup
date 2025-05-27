@@ -12,6 +12,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.2
   flutter_svg: ^2.1.0
+  package_info_plus: ^8.3.0
+  either_dart: ^1.0.0
 
 dev_dependencies:
   flutter_test:
