@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:mugup/src/pages/login/controllers/login_controller.dart';
 import '../../../pages/home/bindings/home_page_binding.dart';
 import '../../../pages/home/controllers/home_page_controller.dart';
+import '../../../pages/home/views/home_page.dart';
 import '../../../pages/login/bindings/login_binding.dart';
+import '../../../pages/login/controllers/login_controller.dart';
 import '../../../pages/shared/views/not_found_page.dart';
 import '../../../pages/signup/bindings/singup_binding.dart';
 import '../../../pages/signup/controllers/signup_controller.dart';
@@ -19,13 +20,13 @@ class MugupPages {
 
   static GetPage<HomePageController> get _home => GetPage(
     name: RoutePaths.home,
-    page: () => Placeholder(),
+    page: () => HomePage(),
     binding: HomePageBinding(),
   );
 
   static GetPage<SplashController> get _splash => GetPage(
     name: RoutePaths.splash,
-    page: () => SplashScreen(hasConnectionError: true,),
+    page: () => SplashScreen(),
     binding: SplashBinding(),
   );
 

@@ -18,8 +18,11 @@ class $AssetsSvgGen {
   /// File path: assets/svg/cup.png
   AssetGenImage get cup => const AssetGenImage('assets/svg/cup.png');
 
+  /// File path: assets/svg/search.svg
+  String get search => 'assets/svg/search.svg';
+
   /// List of all assets
-  List<dynamic> get values => [appName, cup];
+  List<dynamic> get values => [appName, cup, search];
 }
 
 class Assets {
