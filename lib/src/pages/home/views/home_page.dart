@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../infrastructure/utils/utils.dart';
 import '../controllers/home_page_controller.dart';
+import 'widget/offer_banner.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
@@ -21,14 +21,15 @@ class HomePage extends GetView<HomePageController> {
       children: [
         _appBar(context),
         Utils.mediumVerticalSpace,
-        Expanded(
-          child: CarouselView(
-            controller: CarouselController(),
-            backgroundColor: Colors.red,
-            itemExtent: 80,
-            children: a.map((e) => Text(e)).toList(),
-          ),
-        ),
+        OfferBanner(),
+        // Expanded(
+        //   child: CarouselView(
+        //     controller: CarouselController(),
+        //     backgroundColor: Colors.red,
+        //     itemExtent: 80,
+        //     children: a.map((e) => Text(e)).toList(),
+        //   ),
+        // ),
       ],
     ),
   );

@@ -19,7 +19,7 @@ class HomePageController extends GetxController {
       ].obs;
 
   RxBool isLoading = false.obs;
-  final currentPage = 0.obs;
+  RxInt currentPage = 0.obs;
 
   Future<void> getAllOfferBanners() async {
     isLoading(true);
