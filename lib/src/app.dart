@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mugup/src/infrastructure/theme/mugup_text_theme.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../gen/fonts.gen.dart';
 import 'infrastructure/routes/route_pages/mugup_pages.dart';
@@ -18,6 +17,9 @@ class App extends StatelessWidget {
     title: title,
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
+      primaryColor: Themes.primaryColor,
+      secondaryHeaderColor: Themes.secondaryColor,
+      indicatorColor: Colors.white,
       fontFamily: FontFamily.popins,
       useMaterial3: true,
       textTheme: MugupTextTheme.textTheme,
