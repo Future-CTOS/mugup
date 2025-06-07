@@ -14,11 +14,17 @@ class Utils {
   static const SizedBox tinyVerticalSpace = SizedBox(height: tinySpace);
   static const SizedBox smallVerticalSpace = SizedBox(height: smallSpace);
   static const SizedBox mediumVerticalSpace = SizedBox(height: mediumSpace);
-  static const SizedBox semiLargeVerticalSpace = SizedBox(height: semiLargeSpace);
+  static const SizedBox semiLargeVerticalSpace = SizedBox(
+    height: semiLargeSpace,
+  );
+
   // ---------------
-  static const SizedBox smallHorizontalSpace = SizedBox(height: smallSpace);
+  static const SizedBox smallHorizontalSpace = SizedBox(width: smallSpace);
+  static const SizedBox mediumHorizontalSpace = SizedBox(width: mediumSpace);
+
   // ---------------
-  static const tinyPadding = EdgeInsets.all(tinySpace);
-  static const smallPadding = EdgeInsets.all(smallSpace);
-  static const mediumPadding = EdgeInsets.all(mediumSpace);
+  static const EdgeInsets tinyPadding = EdgeInsets.all(tinySpace);
+  static const EdgeInsets smallPadding = EdgeInsets.all(smallSpace);
+  static const EdgeInsets mediumPadding = EdgeInsets.all(mediumSpace);
+  static const EdgeInsets semiLargePadding = EdgeInsets.all(semiLargeSpace);
 }
