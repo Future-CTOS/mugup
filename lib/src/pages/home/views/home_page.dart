@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../infrastructure/utils/utils.dart';
 import '../controllers/home_page_controller.dart';
-import 'widget/offer_banner.dart';
+import 'widget/offer_banner/offer_banner.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
@@ -16,45 +16,46 @@ class HomePage extends GetView<HomePageController> {
       SafeArea(child: Scaffold(body: _content(context)));
 
   Padding _content(BuildContext context) => Padding(
-    padding: Utils.mediumPadding,
+    padding: Utils.semiLargePadding,
     child: Column(
       children: [
         _appBar(context),
         Utils.mediumVerticalSpace,
-        OfferBanner(),
-        // Expanded(
-        //   child: CarouselView(
-        //     controller: CarouselController(),
-        //     backgroundColor: Colors.red,
-        //     itemExtent: 80,
-        //     children: a.map((e) => Text(e)).toList(),
-        //   ),
-        // ),
+        Expanded(child: OfferBanner()),
+        Text('data'),
       ],
     ),
   );
 
-  Widget _appBar(BuildContext context) => Row(
-    spacing: Utils.largeSpace,
-    children: [
-      Expanded(
-        child: TextField(
-          controller: controller.textController,
-          decoration: InputDecoration(
-            hintText: 'What would you like to drink?',
-            hintStyle: Theme.of(context).textTheme.titleSmall,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-            ),
-            suffixIcon: Padding(
-              padding: EdgeInsets.only(right: 12),
-              child: SvgPicture.asset(Assets.svg.search),
+  Widget _appBar(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      spacing: Utils.largeSpace,
+      children: [
+        Expanded(
+          child: TextField(
+            controller: controller.textController,
+            decoration: InputDecoration(
+              hintText: 'What would you like to drink?',
+              hintStyle: theme.textTheme.titleSmall,
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: context.theme.primaryColor,
+                  strokeAlign: 20,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Utils.largeSpace),
+                ),
+              ),
+              suffixIcon: Padding(
+                padding: EdgeInsets.only(right: Utils.semiLargeSpace),
+                child: SvgPicture.asset(Assets.svg.search),
+              ),
             ),
           ),
         ),
-      ),
-      Icon(CupertinoIcons.bell, color: Color(0xff5D4037)),
-    ],
-  );
+        Icon(CupertinoIcons.bell, color: theme.primaryColor),
+      ],
+    );
+  }
 }

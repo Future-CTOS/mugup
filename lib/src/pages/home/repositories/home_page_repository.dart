@@ -9,18 +9,22 @@ import '../models/offer_banner_view_model.dart';
 class HomePageRepository {
   Future<Either<String, List<OfferBannerViewModel>>>
   getAllOfferBanners() async {
-    int? statusCode;
-    final http.Response response = await http.get(
-      RepositoryUrls.getOfferBanner,
-    );
-    final List<dynamic> jsonData = json.decode(response.body);
-    statusCode = response.statusCode;
-    if (statusCode == 200) {
-      final List<OfferBannerViewModel> banners =
-          jsonData.map((e) => OfferBannerViewModel.fromJson(e)).toList();
-      return Right(banners);
-    } else {
-      return const Left('failed to get offer banners');
+    try {
+      int? statusCode;
+      final http.Response response = await http.get(
+        RepositoryUrls.getOfferBanner,
+      );
+      final List<dynamic> jsonData = json.decode(response.body);
+      statusCode = response.statusCode;
+      if (statusCode == 200) {
+        final List<OfferBannerViewModel> banners =
+            jsonData.map((e) => OfferBannerViewModel.fromJson(e)).toList();
+        return Right(banners);
+      } else {
+        return const Left('failed to get offer banners');
+      }
+    } catch (e) {
+      return Left(e.toString());
     }
   }
 }
