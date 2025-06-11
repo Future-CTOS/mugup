@@ -20,7 +20,7 @@ class BannerItem extends GetView<HomePageController> {
     child: Align(
       alignment: Alignment.bottomCenter,
       child: TabPageSelector(
-        controller: controller.tabController,
+        controller: controller.tabOfferBannerController,
         selectedColor: context.theme.primaryColor,
         color: Colors.white,
         borderStyle: BorderStyle.none,
