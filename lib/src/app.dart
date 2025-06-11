@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mugup/src/infrastructure/theme/mugup_text_theme.dart';
 
-import '../gen/fonts.gen.dart';
 import 'infrastructure/routes/route_pages/mugup_pages.dart';
 import 'infrastructure/routes/route_paths/route_paths.dart';
-import 'infrastructure/theme/themes.dart';
+import 'infrastructure/theme/mugup_theme_data.dart';
 
 class App extends StatelessWidget {
   final String title;
@@ -16,14 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) => GetMaterialApp(
     title: title,
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      primaryColor: Themes.primaryColor,
-      secondaryHeaderColor: Themes.secondaryColor,
-      indicatorColor: Colors.white,
-      fontFamily: FontFamily.popins,
-      useMaterial3: true,
-      textTheme: MugupTextTheme.textTheme,
-    ),
+    theme: MugupThemeData.theme,
     initialRoute: RoutePaths.splash,
     unknownRoute: MugupPages.notFoundPage,
     getPages: MugupPages.routes,
