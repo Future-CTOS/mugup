@@ -2,60 +2,90 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:mugup/src/pages/home/models/menu_item_view_model.dart';
+import 'package:mugup/src/pages/home/views/url_example.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../infrastructure/utils/utils.dart';
 import '../controllers/home_page_controller.dart';
+import '../models/enum/menu_category.dart';
+import 'widget/coffee_type_tab_bar.dart';
+import 'widget/menu_items.dart';
 import 'widget/offer_banner/offer_banner.dart';
 
 class HomePage extends GetView<HomePageController> {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      SafeArea(child: Scaffold(body: _content(context)));
+  Widget build(BuildContext context) => SafeArea(
+    child: Scaffold(
+      body: Padding(
+        padding: Utils.semiLargePadding,
+        child: SingleChildScrollView(
+          controller: controller.scrollPageController,
+          child: _content(context),
+        ),
+      ),
+    ),
+  );
 
-  Padding _content(BuildContext context) => Padding(
-    padding: Utils.semiLargePadding,
+  Widget _content(final BuildContext context) => SizedBox(
+    height: context.height,
+    width: context.width,
     child: Column(
       children: [
         _appBar(context),
         Utils.mediumVerticalSpace,
-        Expanded(child: OfferBanner()),
-        Text('data'),
+        Obx(
+          () =>
+              controller.isOfferBannerVisible
+                  ? Expanded(flex: 1, child: OfferBanner())
+                  : SizedBox.shrink(),
+        ),
+        Utils.mediumVerticalSpace,
+        Expanded(
+          flex: 3,
+          child: CoffeeTypeTabBar(
+            tabController: controller.tabBarCoffeeTypeController,
+            tabViews: _tabViews(),
+          ),
+        ),
       ],
     ),
   );
 
-  Widget _appBar(BuildContext context) {
+  List<Widget> _tabViews() => List.generate(
+    MenuCategory.values.length,
+    (index) => Obx(
+      () => MenuItems(
+        scrollController: controller.scrollTabBarViewsController,
+        items: controller.menuItems,
+        isLoading: controller.isItemsLoading.value,
+      ),
+    ),
+  );
+
+  Widget _appBar(final BuildContext context) {
     final theme = Theme.of(context);
-    return Row(
-      spacing: Utils.largeSpace,
-      children: [
-        Expanded(
-          child: TextField(
-            controller: controller.textController,
-            decoration: InputDecoration(
-              hintText: 'What would you like to drink?',
-              hintStyle: theme.textTheme.titleSmall,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: context.theme.primaryColor,
-                  strokeAlign: 20,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(Utils.largeSpace),
-                ),
-              ),
-              suffixIcon: Padding(
-                padding: EdgeInsets.only(right: Utils.semiLargeSpace),
-                child: SvgPicture.asset(Assets.svg.search),
-              ),
+    return SizedBox(height: kToolbarHeight, child: _appBarContent(theme));
+  }
+
+  Widget _appBarContent(ThemeData theme) => Row(
+    spacing: Utils.largeSpace,
+    children: [
+      Expanded(
+        child: TextField(
+          controller: controller.textController,
+          decoration: InputDecoration(
+            hintText: 'What would you like to drink?',
+            suffixIcon: Padding(
+              padding: EdgeInsets.only(right: Utils.semiLargeSpace),
+              child: SvgPicture.asset(Assets.svg.search),
             ),
           ),
         ),
-        Icon(CupertinoIcons.bell, color: theme.primaryColor),
-      ],
-    );
-  }
+      ),
+      Icon(CupertinoIcons.bell, color: theme.primaryColor),
+    ],
+  );
 }
