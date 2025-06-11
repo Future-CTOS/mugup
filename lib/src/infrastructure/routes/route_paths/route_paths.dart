@@ -5,4 +5,5 @@ class RoutePaths {
   static const String singUp = '/sing-up';
   static const String login = '/login';
   static const String home = '/home';
+  static const String notFound = '/not-found';
 }

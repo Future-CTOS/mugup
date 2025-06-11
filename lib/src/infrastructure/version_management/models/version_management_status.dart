@@ -1,0 +1,1 @@
+enum VersionManagementStatus { noUpdateAvailable, newUpdate }

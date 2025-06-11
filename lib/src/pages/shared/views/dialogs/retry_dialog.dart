@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RetryDialog extends StatefulWidget {
-  const RetryDialog({super.key});
+  const RetryDialog({
+    super.key,
+    required this.onRetryTapped,
+    this.errorMessage =
+        'it looks like you are not connected to the internet, please check your connection\n and try again',
+  });
+
+  final Future<void> Function() onRetryTapped;
+  final String errorMessage;
 
   Future<void> show(BuildContext context) async => showDialog(
     context: context,
@@ -15,18 +23,23 @@ class RetryDialog extends StatefulWidget {
 
 class _RetryDialog extends State<RetryDialog> {
   @override
+  void dispose() {
+    widget.onRetryTapped();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Dialog.fullscreen(
     backgroundColor: Colors.transparent,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(Icons.cancel),
-        Text(
-          'it looks like you are not connected to the internet, please check your connection\n and try again',
-          style: TextStyle(color: Colors.white),
-        ),
+        Text(widget.errorMessage, style: TextStyle(color: Colors.white)),
         ElevatedButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
           child: Text('retry'),
         ),
       ],
