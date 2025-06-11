@@ -15,7 +15,6 @@ class OfferBanner extends GetView<HomePageController> {
       onExit: controller.onBannerHoverExit,
       child: SizedBox(
         width: context.width,
-        height: context.height / 3,
         child: Stack(
           children: [
             BannerSlider(),
