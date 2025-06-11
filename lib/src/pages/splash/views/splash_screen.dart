@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mugup/gen/assets.gen.dart';
-import 'package:mugup/src/components/shine_effect.dart';
 
-import '../../shared/views/dialogs/retry_dialog.dart';
-import '../controllers/splash_controller.dart';
+import '../../../components/shine_effect.dart';
+
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
