@@ -8,5 +8,5 @@ class ThemeNames {
   static const Color headingColor = Color(0xFF3C3C3C);
   static const Color paragraphColor = Color(0xFF555555);
   static const Color goldenColor = Color(0xFFFFB800);
-  static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color surfaceColor = Color(0xFFFFFFFF);
 }
