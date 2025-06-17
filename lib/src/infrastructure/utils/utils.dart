@@ -12,6 +12,7 @@ class Utils {
 
   // ---------------
   static const SizedBox tinyVerticalSpace = SizedBox(height: tinySpace);
+  static const SizedBox tinyHorizontalSpace = SizedBox(height: tinySpace);
   static const SizedBox smallVerticalSpace = SizedBox(height: smallSpace);
   static const SizedBox mediumVerticalSpace = SizedBox(height: mediumSpace);
   static const SizedBox semiLargeVerticalSpace = SizedBox(
@@ -20,6 +21,7 @@ class Utils {
 
   // ---------------
   static const SizedBox smallHorizontalSpace = SizedBox(width: smallSpace);
+  static const SizedBox semiLargeHorizontalSpace = SizedBox(width: semiLargeSpace);
   static const SizedBox mediumHorizontalSpace = SizedBox(width: mediumSpace);
 
   // ---------------
