@@ -6,7 +6,7 @@ class MenuItemViewModel {
   final String title;
   final String description;
   final double price;
-  final double? discountedPrice;
+  final double? beforeDiscountedPrice;
   final double rate;
   final Uint8List? avatar;
 
@@ -15,7 +15,7 @@ class MenuItemViewModel {
     required this.title,
     required this.description,
     required this.price,
-    required this.discountedPrice,
+    required this.beforeDiscountedPrice,
     required this.rate,
     required String? avatar,
   }) : avatar =
@@ -27,7 +27,7 @@ class MenuItemViewModel {
         title: json['title'],
         description: json['description'],
         price: json['price'],
-        discountedPrice: json['discountedPrice'],
+        beforeDiscountedPrice: json['beforeDiscountedPrice'],
         rate: json['rate'],
         avatar: json['avatar'],
       );
