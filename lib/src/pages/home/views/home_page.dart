@@ -18,6 +18,14 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) => SafeArea(
     child: Scaffold(
+      bottomNavigationBar: Obx(
+            () => HomPageBottomNavigation(
+          onTapNavigationItem:
+              (final index) =>
+          controller.currentTabNavigationIndex.value = index,
+          currentIndex: controller.currentTabNavigationIndex.value,
+        ),
+      ),
       body: Padding(
         padding: Utils.semiLargePadding,
         child: Obx(
