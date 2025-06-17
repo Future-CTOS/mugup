@@ -69,7 +69,7 @@ class SplashController extends GetxController {
 
   Future<void> _onConnectionError() async {
     showRetryButton.value = true;
-    RetryDialog(onRetryTapped: _onRetryTapped).show(Get.context!);
+    RetryDialog(onRetryTapped: () => _onRetryTapped()).show(Get.context!);
   }
 
   Future<void> _onRetryTapped() async {
