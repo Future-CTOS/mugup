@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../infrastructure/utils/utils.dart';
 import '../../models/enum/menu_category.dart';
+import 'filter_product_bar.dart';
 
 class CoffeeTypeTabBar extends StatelessWidget {
   const CoffeeTypeTabBar({
@@ -16,6 +18,8 @@ class CoffeeTypeTabBar extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     children: [
       tabBar(context),
+      Utils.semiLargeVerticalSpace,
+      FilterProductBar(),
       Expanded(
         child: TabBarView(controller: tabController, children: tabViews),
       ),

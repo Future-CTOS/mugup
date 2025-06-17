@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../shared/views/dialogs/retry_dialog.dart';
 import '../models/enum/menu_category.dart';
+import '../models/enum/product_filter_category.dart';
 import '../models/menu_item_view_model.dart';
 import '../models/offer_banner_view_model.dart';
 import '../repositories/home_page_repository.dart';
@@ -16,22 +17,16 @@ class HomePageController extends GetxController
   late final TabController tabOfferBannerController;
   late final TabController tabBarCoffeeTypeController;
   late final ScrollController scrollPageController;
-  late final ScrollController scrollTabBarViewsController;
 
   final TextEditingController textController = TextEditingController();
 
   final HomePageRepository _repository = HomePageRepository();
 
   final RxList<OfferBannerViewModel> offerBanners =
-      <OfferBannerViewModel>[
-        OfferBannerViewModel(id: 1, imageBytes: UrlExample.value1),
-        OfferBannerViewModel(id: 2, imageBytes: UrlExample.value1),
-        OfferBannerViewModel(id: 3, imageBytes: UrlExample.value1),
-        OfferBannerViewModel(id: 4, imageBytes: UrlExample.value1),
-        OfferBannerViewModel(id: 5, imageBytes: UrlExample.value1),
-      ].obs;
+      <OfferBannerViewModel>[].obs;
 
   final RxList<MenuItemViewModel> menuItems = <MenuItemViewModel>[].obs;
+  final RxList<int> _selectedFilterIds = <int>[].obs;
 
   final RxBool isLoading = false.obs;
   final RxBool isItemsLoading = false.obs;
@@ -39,17 +34,17 @@ class HomePageController extends GetxController
 
   final RxInt currentPage = 0.obs;
   final RxInt currentTabIndex = MenuCategory.coffee.id.obs;
+  final RxInt currentTabNavigationIndex = 0.obs;
   final RxDouble scrollOffset = 0.0.obs;
 
   @override
   void onInit() async {
-    super.onInit();
-
     pageController = PageController();
-    _initScrollControllers();
+    _initScrollController();
     _initTabBarCoffeeType();
     await _initOfferBanners();
     await _fetchMenuItems();
+    super.onInit();
   }
 
   @override
@@ -58,30 +53,19 @@ class HomePageController extends GetxController
     tabOfferBannerController.dispose();
     tabBarCoffeeTypeController.dispose();
     scrollPageController.dispose();
-    scrollTabBarViewsController.dispose();
     textController.dispose();
     super.dispose();
   }
 
-  void _initScrollControllers() {
+  void _initScrollController() {
     scrollPageController = ScrollController();
-    scrollTabBarViewsController = ScrollController();
 
-    void updateScrollOffset() {
-      final offset =
-          scrollPageController.hasClients
-              ? scrollPageController.position.pixels
-              : scrollTabBarViewsController.hasClients
-              ? scrollTabBarViewsController.position.pixels
-              : 0.0;
-      scrollOffset.value = offset;
-    }
-
-    scrollPageController.addListener(updateScrollOffset);
-    scrollTabBarViewsController.addListener(updateScrollOffset);
+    // scrollPageController.addListener(
+    //   () => scrollOffset.value = scrollPageController.offset,
+    // );
   }
 
-  void _initTabBarCoffeeType() {
+  Future<void> _initTabBarCoffeeType() async {
     tabBarCoffeeTypeController = TabController(
       length: MenuCategory.values.length,
       initialIndex: currentTabIndex.value,
@@ -93,42 +77,68 @@ class HomePageController extends GetxController
         return;
       }
       currentTabIndex.value = tabBarCoffeeTypeController.index;
-      await _fetchMenuItems();
+      if (isFilterButtonSelected) {
+        await _filterMenuItems();
+      } else {
+        await _fetchMenuItems();
+      }
     });
   }
 
   Future<void> _initOfferBanners() async {
+    await _fetchOfferBanners();
     tabOfferBannerController = TabController(
       length: offerBanners.length,
       vsync: this,
     );
-
-    await _fetchOfferBanners();
     _startAutoPageScroll();
   }
 
   Future<void> _fetchOfferBanners() async {
     isLoading.value = true;
+    offerBanners.clear();
     final Either<String, List<OfferBannerViewModel>> result =
         await _repository.getAllOfferBanners();
     isLoading.value = false;
 
-    result.fold(
-      (error) => RetryDialog(onRetryTapped: _fetchOfferBanners),
-      (banners) => offerBanners.value = banners,
-    );
+    result.fold((final _) => _showRetryDialog(_fetchOfferBanners), (banners) {
+      offerBanners.value = banners;
+      offerBanners.removeWhere((item) => item.picture == null);
+    });
   }
 
   Future<void> _fetchMenuItems() async {
     isItemsLoading.value = true;
+    menuItems.clear();
     final Either<String, List<MenuItemViewModel>> result = await _repository
         .getMenuItems(currentTabIndex.value);
     isItemsLoading.value = false;
 
     result.fold(
-      (error) => RetryDialog(onRetryTapped: _fetchMenuItems),
+      (final _) => _showRetryDialog(_fetchMenuItems),
       (items) => menuItems.value = items,
     );
+  }
+
+  Future<void> _filterMenuItems() async {
+    isItemsLoading.value = true;
+    final Either<String, List<MenuItemViewModel>> result = await _repository
+        .filterMenuItemsById(
+          productType: currentTabIndex.value,
+          rate: _selectedFilterIds.contains(ProductFilterCategory.rating.id),
+          sortByPriceOrder: _selectedFilterIds.contains(
+            ProductFilterCategory.price.id,
+          ),
+          withDiscount: _selectedFilterIds.contains(
+            ProductFilterCategory.discount.id,
+          ),
+        );
+    isItemsLoading.value = false;
+
+    result.fold((final _) => _showRetryDialog(_fetchMenuItems), (final items) {
+      menuItems.clear();
+      menuItems.value = items;
+    });
   }
 
   void _startAutoPageScroll() {
@@ -171,7 +181,38 @@ class HomePageController extends GetxController
 
   void onBannerHoverExit(PointerEvent _) => isBannerHovered.value = false;
 
-  bool get isOfferBannerVisible => scrollOffset.value < 120;
+  Future<void> onTapFilterProductItem(int filterCategoryId) async {
+    if (_selectedFilterIds.contains(filterCategoryId)) {
+      _selectedFilterIds.remove(filterCategoryId);
+      await _fetchMenuItems();
+      return;
+    }
+    _selectedFilterIds.add(filterCategoryId);
+    await _filterMenuItems();
+  }
+
+  Future<void> checkForUpdateItems() async {
+    if (_selectedFilterIds.isEmpty) {
+      await _fetchMenuItems();
+      return;
+    }
+
+    await _filterMenuItems();
+  }
+
+  bool isSelectedFilterItem(int filterId) =>
+      _selectedFilterIds.contains(filterId);
+
+  void _showRetryDialog(Future<void> Function() retry) {
+    if (Get.context != null) {
+      RetryDialog(onRetryTapped: retry).show(Get.context!);
+    }
+  }
+
+  // todo: set with width screen of device
+  bool get isOfferBannerVisible => scrollOffset < 10;
+
+  bool get isFilterButtonSelected => _selectedFilterIds.isNotEmpty;
 
   bool get isOnDesktopAndWeb {
     if (kIsWeb) return true;

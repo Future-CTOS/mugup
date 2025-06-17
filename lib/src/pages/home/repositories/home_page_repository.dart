@@ -50,4 +50,34 @@ class HomePageRepository {
       return Left(e.toString());
     }
   }
+
+  Future<Either<String, List<MenuItemViewModel>>> filterMenuItemsById({
+    required int productType,
+    required bool? rate,
+    required bool? withDiscount,
+    required bool? sortByPriceOrder,
+  }) async {
+    try {
+      int? statusCode;
+      final http.Response response = await http.get(
+        RepositoryUrls.filterProducts(
+          productType: productType,
+          rate: rate,
+          onlyWithDiscount: withDiscount,
+          sortByPriceOrder: sortByPriceOrder,
+        ),
+      );
+      final List<dynamic> jsonData = json.decode(response.body);
+      statusCode = response.statusCode;
+      if (statusCode == 200) {
+        final List<MenuItemViewModel> items =
+            jsonData.map((json) => MenuItemViewModel.fromJson(json)).toList();
+        return Right(items);
+      } else {
+        return const Left('failed to get menu items');
+      }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }
