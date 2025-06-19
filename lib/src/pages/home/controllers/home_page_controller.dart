@@ -3,13 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../shared/views/dialogs/retry_dialog.dart';
+import '../../../infrastructure/utils/utils.dart';
 import '../models/enum/menu_category.dart';
 import '../models/enum/product_filter_category.dart';
 import '../models/menu_item_view_model.dart';
 import '../models/offer_banner_view_model.dart';
 import '../repositories/home_page_repository.dart';
-import '../views/url_example.dart';
 
 class HomePageController extends GetxController
     with GetTickerProviderStateMixin {
@@ -101,7 +100,9 @@ class HomePageController extends GetxController
         await _repository.getAllOfferBanners();
     isLoading.value = false;
 
-    result.fold((final _) => _showRetryDialog(_fetchOfferBanners), (banners) {
+    result.fold((final _) => Utils.showRetryDialog(_fetchOfferBanners), (
+      banners,
+    ) {
       offerBanners.value = banners;
       offerBanners.removeWhere((item) => item.picture == null);
     });
@@ -115,7 +116,7 @@ class HomePageController extends GetxController
     isItemsLoading.value = false;
 
     result.fold(
-      (final _) => _showRetryDialog(_fetchMenuItems),
+      (final _) => Utils.showRetryDialog(_fetchMenuItems),
       (items) => menuItems.value = items,
     );
   }
@@ -135,7 +136,9 @@ class HomePageController extends GetxController
         );
     isItemsLoading.value = false;
 
-    result.fold((final _) => _showRetryDialog(_fetchMenuItems), (final items) {
+    result.fold((final _) => Utils.showRetryDialog(_fetchMenuItems), (
+      final items,
+    ) {
       menuItems.clear();
       menuItems.value = items;
     });
@@ -202,12 +205,6 @@ class HomePageController extends GetxController
 
   bool isSelectedFilterItem(int filterId) =>
       _selectedFilterIds.contains(filterId);
-
-  void _showRetryDialog(Future<void> Function() retry) {
-    if (Get.context != null) {
-      RetryDialog(onRetryTapped: retry).show(Get.context!);
-    }
-  }
 
   // todo: set with width screen of device
   bool get isOfferBannerVisible => scrollOffset < 10;
