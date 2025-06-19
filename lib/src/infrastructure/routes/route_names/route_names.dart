@@ -7,4 +7,6 @@ class RouteNames {
   static const String singUp = RoutePaths.singUp;
   static const String login = RoutePaths.login;
   static const String home = RoutePaths.home;
+  static const String detailsProduct =
+      RoutePaths.home + RoutePaths.detailsProduct;
 }

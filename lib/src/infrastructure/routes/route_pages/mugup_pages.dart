@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import '../../../pages/details_product/common/details_product_binding.dart';
+import '../../../pages/details_product/views/details_product_page.dart';
 import '../../../pages/home/bindings/home_page_binding.dart';
 import '../../../pages/home/controllers/home_page_controller.dart';
 import '../../../pages/home/views/home_page.dart';
@@ -22,6 +24,7 @@ class MugupPages {
     name: RoutePaths.home,
     page: () => HomePage(),
     binding: HomePageBinding(),
+    children: [_detailsProduct],
   );
 
   static GetPage<SplashController> get _splash => GetPage(
@@ -40,6 +43,12 @@ class MugupPages {
     name: RoutePaths.login,
     page: () => Placeholder(),
     binding: LoginBinding(),
+  );
+
+  static GetPage<LoginController> get _detailsProduct => GetPage(
+    name: RoutePaths.detailsProduct,
+    page: () => DetailsProductPage(),
+    binding: DetailsProductBinding(),
   );
 
   static GetPage get notFoundPage =>

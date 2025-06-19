@@ -39,4 +39,7 @@ class RepositoryUrls {
       _baseUrl + _products,
     ).replace(queryParameters: queryParameters);
   }
+
+  static Uri fetchDetailsProductById({required int id}) =>
+      Uri.parse('$_baseUrl$_products/$id');
 }

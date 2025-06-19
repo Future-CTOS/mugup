@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../infrastructure/routes/route_names/route_names.dart';
 import '../../../../infrastructure/theme/theme_names.dart';
 import '../../../../infrastructure/utils/utils.dart';
 import '../../models/menu_item_view_model.dart';
@@ -46,7 +47,14 @@ class MenuItems extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
-            return MenuItemTile(item: item);
+            return GestureDetector(
+              onTap:
+                  () => Get.toNamed(
+                    RouteNames.detailsProduct,
+                    parameters: {'id': '${item.id}'},
+                  ),
+              child: MenuItemTile(item: item),
+            );
           },
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),

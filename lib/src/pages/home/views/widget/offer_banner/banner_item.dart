@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../infrastructure/utils/utils.dart';
-import '../../../controllers/home_page_controller.dart';
 
 class BannerItem extends StatelessWidget {
   const BannerItem({
