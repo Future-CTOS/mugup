@@ -68,7 +68,7 @@ class MugupThemeData {
           borderRadius: BorderRadius.circular(Utils.largeSpace),
         ),
         hintStyle: TextStyle(
-          color: ThemeNames.disableColor.withOpacity(0.7),
+          color: ThemeNames.disableColor.withValues(alpha: 0.7),
           fontWeight: FontWeight.w400,
         ),
       );
@@ -88,9 +88,19 @@ class MugupThemeData {
       fontSize: 12,
       fontWeight: FontWeight.w700,
     ),
+    displaySmall: TextStyle(
+      color: ThemeNames.headingColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+    ),
     labelMedium: TextStyle(
       color: ThemeNames.headingColor,
       fontSize: 12,
+      fontWeight: FontWeight.w500,
+    ),
+    titleLarge: TextStyle(
+      color: ThemeNames.headingColor,
+      fontSize: 18,
       fontWeight: FontWeight.w500,
     ),
     bodyLarge: TextStyle(
@@ -98,10 +108,20 @@ class MugupThemeData {
       fontWeight: FontWeight.w500,
       fontSize: 14,
     ),
+    headlineMedium: TextStyle(
+      color: ThemeNames.primaryColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    ),
     bodyMedium: TextStyle(
       color: ThemeNames.paragraphColor,
       fontWeight: FontWeight.w400,
       fontSize: 12,
+    ),
+    displayMedium: TextStyle(
+      color: ThemeNames.headingColor,
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
     ),
     labelSmall: TextStyle(
       color: ThemeNames.primaryColor,
