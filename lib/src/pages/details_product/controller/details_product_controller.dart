@@ -16,6 +16,57 @@ class DetailsProductController extends GetxController {
 
   DetailsProductViewModel? detailsProduct;
 
+  List example = [
+    '1',
+    'A',
+    'B',
+    'C',
+    'SS',
+    'CAA',
+    'CAA-sd',
+    'CASS',
+    'MMI',
+
+    '1',
+    'A',
+    'B',
+    'C',
+    'SS',
+    'CAA',
+    'CAA-sd',
+    'CASS',
+    'MMI',
+
+    '1',
+    'A',
+    'B',
+    'C',
+    'SS',
+    'CAA',
+    'CAA-sd',
+    'CASS',
+    'MMI',
+    '1',
+    'A',
+    'B',
+    'C',
+    'SS',
+    'CAA',
+    'CAA-sd',
+    'CASS',
+    'MMI',
+    '1',
+    'A',
+    'B',
+    'C',
+    'SS',
+    'CAA',
+    'CAA-sd',
+    'CASS',
+    'MMI',
+  ];
+  List example2 = ['Variant', 'Babeee', 'hesam', 'hamed', 'MIJI', 'mioo'];
+
   @override
   Future<void> onInit() async {
     if (productId != null) {
