@@ -12,18 +12,33 @@ class MugupThemeData {
     useMaterial3: true,
     primaryColor: ThemeNames.primaryColor,
     disabledColor: ThemeNames.disableColor,
+    secondaryHeaderColor: ThemeNames.surfaceColor,
     fontFamily: FontFamily.popins,
     colorScheme: ColorScheme.fromSeed(
       seedColor: ThemeNames.primaryColor,
       primary: ThemeNames.primaryColor,
       secondary: ThemeNames.disableColor,
     ),
-    tabBarTheme: _tabBarThemeData,
+    tabBarTheme: _tabBarTheme,
+    iconTheme: _iconTheme,
+    bottomNavigationBarTheme: _navigationBarTheme,
     inputDecorationTheme: _inputDecorationTheme,
     textTheme: _textTheme,
   );
 
-  static final TabBarThemeData _tabBarThemeData = TabBarThemeData(
+  static final BottomNavigationBarThemeData _navigationBarTheme =
+      BottomNavigationBarThemeData(
+        selectedIconTheme: _iconTheme,
+        unselectedIconTheme: _iconTheme.copyWith(
+          color: ThemeNames.disableColor,
+        ),
+        selectedLabelStyle: _textTheme.labelSmall,
+        unselectedLabelStyle: _textTheme.labelSmall?.copyWith(
+          color: ThemeNames.disableColor,
+        ),
+      );
+
+  static final TabBarThemeData _tabBarTheme = TabBarThemeData(
     unselectedLabelColor: ThemeNames.disableColor,
     dividerColor: ThemeNames.disableColor,
     labelPadding: Utils.mediumPadding,
@@ -53,7 +68,7 @@ class MugupThemeData {
           borderRadius: BorderRadius.circular(Utils.largeSpace),
         ),
         hintStyle: TextStyle(
-          color: ThemeNames.disableColor.withOpacity(0.7),
+          color: ThemeNames.disableColor.withValues(alpha: 0.7),
           fontWeight: FontWeight.w400,
         ),
       );
@@ -73,8 +88,28 @@ class MugupThemeData {
       fontSize: 12,
       fontWeight: FontWeight.w700,
     ),
+    displaySmall: TextStyle(
+      color: ThemeNames.headingColor,
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+    ),
+    labelMedium: TextStyle(
+      color: ThemeNames.headingColor,
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+    ),
+    titleLarge: TextStyle(
+      color: ThemeNames.headingColor,
+      fontSize: 18,
+      fontWeight: FontWeight.w500,
+    ),
     bodyLarge: TextStyle(
       color: ThemeNames.paragraphColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    ),
+    headlineMedium: TextStyle(
+      color: ThemeNames.primaryColor,
       fontWeight: FontWeight.w500,
       fontSize: 14,
     ),
@@ -83,5 +118,19 @@ class MugupThemeData {
       fontWeight: FontWeight.w400,
       fontSize: 12,
     ),
+    displayMedium: TextStyle(
+      color: ThemeNames.headingColor,
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+    ),
+    labelSmall: TextStyle(
+      color: ThemeNames.primaryColor,
+      fontWeight: FontWeight.w500,
+      fontSize: 10,
+    ),
+  );
+
+  static final IconThemeData _iconTheme = IconThemeData(
+    color: ThemeNames.primaryColor,
   );
 }

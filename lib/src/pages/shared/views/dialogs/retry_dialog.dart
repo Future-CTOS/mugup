@@ -28,6 +28,11 @@ class _RetryDialog extends State<RetryDialog> {
     super.dispose();
   }
 
+  Future<void> onTap() async {
+    Navigator.pop(context);
+    return widget.onRetryTapped();
+  }
+
   @override
   Widget build(BuildContext context) => Dialog.fullscreen(
     backgroundColor: Colors.transparent,
@@ -36,12 +41,7 @@ class _RetryDialog extends State<RetryDialog> {
       children: [
         Icon(Icons.cancel),
         Text(widget.errorMessage, style: TextStyle(color: Colors.white)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('retry'),
-        ),
+        ElevatedButton(onPressed: onTap, child: Text('retry')),
       ],
     ),
   );

@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../infrastructure/utils/utils.dart';
-import '../../../controllers/home_page_controller.dart';
 
-class BannerItem extends GetView<HomePageController> {
-  const BannerItem({super.key, required this.bytes});
+class BannerItem extends StatelessWidget {
+  const BannerItem({
+    super.key,
+    required this.tabController,
+    required this.bytes,
+  });
 
   final Uint8List bytes;
+  final TabController tabController;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -20,7 +24,7 @@ class BannerItem extends GetView<HomePageController> {
     child: Align(
       alignment: Alignment.bottomCenter,
       child: TabPageSelector(
-        controller: controller.tabOfferBannerController,
+        controller: tabController,
         selectedColor: context.theme.primaryColor,
         color: Colors.white,
         borderStyle: BorderStyle.none,

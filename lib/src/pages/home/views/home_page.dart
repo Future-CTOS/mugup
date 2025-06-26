@@ -2,14 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mugup/src/pages/home/models/menu_item_view_model.dart';
-import 'package:mugup/src/pages/home/views/url_example.dart';
-
 import '../../../../gen/assets.gen.dart';
 import '../../../infrastructure/utils/utils.dart';
 import '../controllers/home_page_controller.dart';
 import '../models/enum/menu_category.dart';
 import 'widget/coffee_type_tab_bar.dart';
+import 'widget/hom_page_bottom_navigation.dart';
 import 'widget/menu_items.dart';
 import 'widget/offer_banner/offer_banner.dart';
 
@@ -19,11 +17,22 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) => SafeArea(
     child: Scaffold(
+      bottomNavigationBar: Obx(
+            () => HomPageBottomNavigation(
+          onTapNavigationItem:
+              (final index) =>
+          controller.currentTabNavigationIndex.value = index,
+          currentIndex: controller.currentTabNavigationIndex.value,
+        ),
+      ),
       body: Padding(
         padding: Utils.semiLargePadding,
-        child: SingleChildScrollView(
-          controller: controller.scrollPageController,
-          child: _content(context),
+        child: Obx(
+          () => IgnorePointer(
+            ignoring:
+                controller.isItemsLoading.value || controller.isLoading.value,
+            child: _content(context),
+          ),
         ),
       ),
     ),
@@ -36,12 +45,9 @@ class HomePage extends GetView<HomePageController> {
       children: [
         _appBar(context),
         Utils.mediumVerticalSpace,
-        Obx(
-          () =>
-              controller.isOfferBannerVisible
-                  ? Expanded(flex: 1, child: OfferBanner())
-                  : SizedBox.shrink(),
-        ),
+        controller.isOfferBannerVisible
+            ? Expanded(flex: 1, child: OfferBanner())
+            : SizedBox.shrink(),
         Utils.mediumVerticalSpace,
         Expanded(
           flex: 3,
@@ -58,9 +64,10 @@ class HomePage extends GetView<HomePageController> {
     MenuCategory.values.length,
     (index) => Obx(
       () => MenuItems(
-        scrollController: controller.scrollTabBarViewsController,
+        scrollController: controller.scrollPageController,
         items: controller.menuItems,
         isLoading: controller.isItemsLoading.value,
+        getMenuItems: controller.checkForUpdateItems,
       ),
     ),
   );

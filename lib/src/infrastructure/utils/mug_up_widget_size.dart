@@ -1,0 +1,2 @@
+// todo:(SHAYAN ZARE): I WANNA DEVELOP A CLASS WHICH CAN OPTIMIZE ALL OF SIZE IN ALL THE SOFTWARE
+enum MugUpWidgetSize { tiny(), small() }

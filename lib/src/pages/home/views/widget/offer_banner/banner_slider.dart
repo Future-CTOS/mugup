@@ -13,8 +13,14 @@ class BannerSlider extends GetView<HomePageController> {
     itemCount: controller.offerBanners.length,
     onPageChanged: controller.onBannerChange,
     itemBuilder: (_, index) {
-      final bytes = controller.offerBanners[index].imageBytes;
-      return BannerItem(bytes: bytes);
+      final bytes = controller.offerBanners[index].picture;
+      if (bytes != null) {
+        return BannerItem(
+          bytes: bytes,
+          tabController: controller.tabOfferBannerController,
+        );
+      }
+      return null;
     },
   );
 }
