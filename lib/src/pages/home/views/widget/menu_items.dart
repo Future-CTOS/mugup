@@ -117,7 +117,7 @@ class MenuItemTile extends StatelessWidget {
     children: [
       Flexible(
         child: Text(
-          '\$${item.price.toStringAsFixed(4)}',
+          Utils.showProductPrice(item.price),
           style: theme.textTheme.bodyLarge,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -127,8 +127,8 @@ class MenuItemTile extends StatelessWidget {
         Utils.smallVerticalSpace,
         Flexible(
           child: Text(
-            '\$${item.beforeDiscountedPrice}',
-            style: theme.textTheme.bodyMedium!.copyWith(
+            Utils.showProductPrice(item.beforeDiscountedPrice!),
+            style: theme.textTheme.bodyMedium?.copyWith(
               decoration: TextDecoration.lineThrough,
             ),
             maxLines: 2,
@@ -176,7 +176,7 @@ class AvatarWithRate extends StatelessWidget {
               color: ThemeNames.surfaceColor,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
