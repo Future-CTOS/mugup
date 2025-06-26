@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mugup/src/pages/home/views/widget/hom_page_bottom_navigation.dart';
-
 import '../../../../gen/assets.gen.dart';
 import '../../../infrastructure/utils/utils.dart';
 import '../controllers/home_page_controller.dart';
 import '../models/enum/menu_category.dart';
 import 'widget/coffee_type_tab_bar.dart';
+import 'widget/hom_page_bottom_navigation.dart';
 import 'widget/menu_items.dart';
 import 'widget/offer_banner/offer_banner.dart';
 
