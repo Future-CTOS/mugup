@@ -8,6 +8,7 @@ class Utils {
 
   static const double tinySpace = 2;
   static const double smallSpace = 4;
+  static const double semiMediumSpace = 6;
   static const double mediumSpace = 8;
   static const double semiLargeSpace = 12;
   static const double largeSpace = 16;
