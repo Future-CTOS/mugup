@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../shayan.dart';
 import 'infrastructure/routes/route_pages/mugup_pages.dart';
 import 'infrastructure/routes/route_paths/route_paths.dart';
 import 'infrastructure/theme/mugup_theme_data.dart';
@@ -15,8 +16,9 @@ class App extends StatelessWidget {
     title: title,
     debugShowCheckedModeBanner: false,
     theme: MugupThemeData.theme,
-    initialRoute: RoutePaths.splash,
-    unknownRoute: MugupPages.notFoundPage,
-    getPages: MugupPages.routes,
+    home: Shayan(),
+    // initialRoute: RoutePaths.splash,
+    // unknownRoute: MugupPages.notFoundPage,
+    // getPages: MugupPages.routes,
   );
 }

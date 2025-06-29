@@ -97,14 +97,14 @@ class MenuItemTile extends StatelessWidget {
         Text(
           item.title,
           style: theme.textTheme.bodyLarge,
-          maxLines: 1,
+          softWrap: false,
           overflow: TextOverflow.ellipsis,
         ),
         Utils.smallVerticalSpace,
         Text(
           item.description,
           style: theme.textTheme.bodyMedium,
-          maxLines: 2,
+          softWrap: false,
           overflow: TextOverflow.ellipsis,
         ),
       ],

@@ -22,35 +22,35 @@ class MugupPages {
 
   static GetPage<HomePageController> get _home => GetPage(
     name: RoutePaths.home,
-    page: () => HomePage(),
+    page: HomePage.new,
     binding: HomePageBinding(),
     children: [_detailsProduct],
   );
 
   static GetPage<SplashController> get _splash => GetPage(
     name: RoutePaths.splash,
-    page: () => SplashScreen(),
+    page: SplashScreen.new,
     binding: SplashBinding(),
   );
 
   static GetPage<SignupController> get _signup => GetPage(
     name: RoutePaths.singUp,
-    page: () => Placeholder(),
+    page: Placeholder.new,
     binding: SingupBinding(),
   );
 
   static GetPage<LoginController> get _login => GetPage(
     name: RoutePaths.login,
-    page: () => Placeholder(),
+    page: Placeholder.new,
     binding: LoginBinding(),
   );
 
   static GetPage<LoginController> get _detailsProduct => GetPage(
     name: RoutePaths.detailsProduct,
-    page: () => DetailsProductPage(),
+    page: DetailsProductPage.new,
     binding: DetailsProductBinding(),
   );
 
   static GetPage get notFoundPage =>
-      GetPage(name: RoutePaths.notFound, page: () => NotFoundPage());
+      GetPage(name: RoutePaths.notFound, page: NotFoundPage.new);
 }

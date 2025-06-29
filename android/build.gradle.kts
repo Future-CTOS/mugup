@@ -1,6 +1,9 @@
 allprojects {
     repositories {
         google()
+        maven {
+   url 'https://maven.myket.ir'
+  }
         mavenCentral()
     }
 }
