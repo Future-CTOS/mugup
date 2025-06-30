@@ -1,4 +1,5 @@
 name: Build Flutter APK and Upload to Telegram
+
 on:
   push:
     branches:
@@ -20,12 +21,25 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Fix NDK version conflict
+        run: |
+          echo 'android { ndkVersion = "27.0.12077973" }' >> android/app/build.gradle
+
       - name: Build APK
         run: flutter build apk --release
+
+      - name: List APK output directory
+        run: ls -R build/app/outputs/flutter-apk
+
+      - name: Upload APK to GitHub Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Send APK to Telegram
         run: |
           curl -F document=@build/app/outputs/flutter-apk/app-release.apk \
                -F chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-               -F caption="🎉 نسخه جدید اپ منتشر شد!" \
+               -F caption="🎉 نسخه جدید اپلیکیشن منتشر شد!" \
                https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
