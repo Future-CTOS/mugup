@@ -1,31 +1,56 @@
-name: Build Flutter APK and Upload to Telegram
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Flutter CI/CD Workflow
+
 on:
   push:
-    branches:
-      - feature/signup-login-screen
+    branches: [ "feature/signup-login-screen" ]
+  pull_request:
+    branches: [ "feature/signup-login-screen" ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Flutter Build
+    runs-on: macos-latest
 
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      # Step 2: Setup Java
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+
+      # Step 3: Setup Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          channel: stable
           flutter-version: '3.29.0'
 
+      # Step 4: Install dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --release
+      # Step 5: Generate code
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: Send APK to Telegram
-        run: |
-          curl -F document=@build/app/outputs/flutter-apk/app-release.apk \
-               -F chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-               -F caption="🎉 نسخه جدید اپ منتشر شد!" \
-               https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendDocument
+      # Step 6: Run tests
+      - name: Run tests
+        run: flutter test
+
+      # Step 7: Build iOS
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
+
+      # Step 8: Build Android App Bundle
+      - name: Build Android App Bundle
+        run: flutter build appbundle --release
